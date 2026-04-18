@@ -1,0 +1,33 @@
+/* Visit https://aka.ms/tsconfig to read more about this file */
+{
+  "include": [
+    "lib",
+    "eslint.config.ts"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "target": "esnext",
+    "moduleResolution": "bundler",
+    "module": "esnext",
+    "lib": [
+      "ESNext"
+    ],
+    "paths": {
+      "@/*": [
+        "./lib/*"
+      ]
+    },
+    "types": ["bun-types"],
+    "declaration": true,
+    "declarationMap": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+
+    "exactOptionalPropertyTypes": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+  }
+}
