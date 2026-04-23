@@ -4,7 +4,7 @@ import { Document } from 'langchain';
 import type { MimeString } from '@freehour/mime';
 import { Mime } from '@freehour/mime';
 import type { ClientServerOptions, ColumnName, DefaultClientOptions, FileRef, FunctionName, GenericDatabase, JsonObject, OmitFrom, SchemaName, StorageLocation, TableDataService, TableName } from '@freehour/supabase-core';
-import { DatabaseService, FileNotSupportedError, StorageService } from '@freehour/supabase-core';
+import { DatabaseService, StorageService } from '@freehour/supabase-core';
 import { JSONLinesLoader, JSONLoader } from '@langchain/classic/document_loaders/fs/json';
 import { TextLoader } from '@langchain/classic/document_loaders/fs/text';
 import { CSVLoader } from '@langchain/community/document_loaders/fs/csv';
@@ -25,6 +25,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 
 import type { Database as LangChainDatabase } from './generated/database';
 import type { FileMetadata, MetadataGeneratorFn, StorageDocument } from './document';
+import { FileNotSupportedError } from './errors';
 
 
 export type RetriverOptions<
@@ -228,5 +229,4 @@ export class EmbeddingService<
     retriever(options: RetriverOptions<BucketName, Metadata>): BaseRetrieverInterface {
         return this.vectorStore.asRetriever(options);
     }
-
 }
