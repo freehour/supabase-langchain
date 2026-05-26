@@ -1,5 +1,7 @@
-import type { JsonObject, StorageLocation } from '@freehour/supabase-core';
+import type { StorageLocation } from '@freehour/supabase-core';
 import type { DocumentInterface } from '@langchain/core/documents';
+
+import type { JsonObject } from './json';
 
 
 export interface FileMetadata {
