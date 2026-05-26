@@ -1,9 +1,9 @@
 {
   "name": "@freehour/supabase-langchain",
   "private": false,
-  "displayName": "Supabase-LangChain",
+  "displayName": "Supabase-Langchain",
   "description": "Integration package for using LangChain with Supabase",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "repository": {
     "type": "git",
@@ -45,7 +45,7 @@
     "@browserbasehq/stagehand": "3.2.1"
   },
   "devDependencies": {
-    "@freehour/supabase-core": "^2.4.0",
+    "@freehour/supabase-core": "^2.5.0",
     "@freehour/eslint-rules": "^1.0.19",
     "@supabase/supabase-js": "^2.106.2",
     "ajv": "^8.20.0",
