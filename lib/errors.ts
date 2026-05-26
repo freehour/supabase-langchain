@@ -5,14 +5,9 @@ import { TracedError } from '@freehour/supabase-core';
 export interface FileNotSupportedErrorOptions extends ErrorOptions {
 
     /**
-     * The name of the file that caused the error.
+     * The file that caused the error.
      */
-    fileName?: string;
-
-    /**
-     * The type of the file that is not supported.
-     */
-    fileType?: string;
+    file: File;
 }
 
 /**
@@ -21,26 +16,19 @@ export interface FileNotSupportedErrorOptions extends ErrorOptions {
 export class FileNotSupportedError extends TracedError {
 
     /**
-     * The name of the file that caused the error.
+     * The file that caused the error.
      */
-    readonly fileName?: string;
-
-    /**
-     * The type of the file that is not supported.
-     */
-    readonly fileType?: string;
+    readonly file: File;
 
     constructor(
         message: string,
         {
-            fileName,
-            fileType,
+            file,
             ...options
-        }: FileNotSupportedErrorOptions = {},
+        }: FileNotSupportedErrorOptions,
     ) {
         super(message, options);
-        this.fileName = fileName;
-        this.fileType = fileType;
+        this.file = file;
     }
 }
 

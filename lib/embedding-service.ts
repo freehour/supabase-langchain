@@ -113,10 +113,7 @@ export class EmbeddingService<
             return new TextLoader(file);
         }
 
-        throw new FileNotSupportedError(`File type ${file.type} is not supported`, {
-            fileName: file.name,
-            fileType: file.type,
-        });
+        throw new FileNotSupportedError(`File type ${file.type} is not supported`, { file });
     }
 
 
