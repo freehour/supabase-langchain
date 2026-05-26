@@ -25,7 +25,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 
 import type { Database as LangChainDatabase } from './generated/database';
 import type { FileMetadata, MetadataGeneratorFn, StorageDocument } from './document';
-import { FileNotSupportedError } from './errors';
+import { EmbeddingError, FileNotSupportedError } from './errors';
 import type { JsonObject } from './json';
 
 
@@ -179,10 +179,10 @@ export class EmbeddingService<
         return documents;
     }
 
-    private async deleteEmbeddings({ fileId }: StorageLocation<BucketName>): Promise<string[]> {
+    private async deleteEmbeddings({ id }: StorageLocation<BucketName>): Promise<string[]> {
         const { data } = await this.embeddings.query
             .select(['id'])
-            .eq<ColumnName<LangChainDatabase, 'public', 'Tables', 'embeddings'>>('file_id', fileId)
+            .eq<ColumnName<LangChainDatabase, 'public', 'Tables', 'embeddings'>>('file_id', id)
             .throwOnError();
 
         const ids = data.map(({ id }) => id);
@@ -201,7 +201,12 @@ export class EmbeddingService<
         return this.updateEmbeddings(
             location,
             typeof metadata === 'function' ? metadata(location) : metadata,
-        );
+        ).catch(error => {
+            throw new EmbeddingError('Failed to update embedding', {
+                cause: error,
+                location,
+            });
+        });
     }
 
     async update(bucket: BucketName, metadata: Metadata | MetadataGeneratorFn<BucketName, Metadata>): Promise<
@@ -215,14 +220,15 @@ export class EmbeddingService<
             .throwOnError();
 
         return Promise.allSettled(
-            data.map(async ({ bucket_id, path_tokens, file_id }) => this.ingest(
-                {
-                    bucket: bucket_id as BucketName,
-                    path: path_tokens.join('/'),
-                    fileId: file_id,
-                },
-                metadata,
-            )),
+            data
+                .map(async ({ bucket_id, path_tokens, file_id }) => this.ingest(
+                    {
+                        bucket: bucket_id as BucketName,
+                        path: path_tokens.join('/'),
+                        id: file_id,
+                    },
+                    metadata,
+                )),
         );
     }
 

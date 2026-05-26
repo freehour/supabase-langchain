@@ -1,3 +1,4 @@
+import type { StorageLocation } from '@freehour/supabase-core';
 import { TracedError } from '@freehour/supabase-core';
 
 
@@ -40,5 +41,35 @@ export class FileNotSupportedError extends TracedError {
         super(message, options);
         this.fileName = fileName;
         this.fileType = fileType;
+    }
+}
+
+export interface EmbeddingErrorOptions extends ErrorOptions {
+
+    /**
+     * The location of the file that caused the error.
+     */
+    location: StorageLocation;
+}
+
+/**
+ * An error that indicates that an embedding operation failed, e.g. due to a failure in the embedding model or vector store.
+ */
+export class EmbeddingError extends TracedError {
+
+    /**
+     * The location of the file that caused the error.
+     */
+    readonly location: StorageLocation;
+
+    constructor(
+        message: string,
+        {
+            location,
+            ...options
+        }: EmbeddingErrorOptions,
+    ) {
+        super(message, options);
+        this.location = location;
     }
 }
