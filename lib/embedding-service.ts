@@ -24,7 +24,7 @@ import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 import type { Database as LangChainDatabase } from './generated/database';
-import type { EmbeddedFile, FileMetadata, MetadataGeneratorFn, StorageDocument } from './document';
+import type { FileEmbedding, FileMetadata, MetadataGeneratorFn, StorageDocument } from './document';
 import { EmbeddingError, FileNotSupportedError } from './errors';
 import type { JsonObject } from './json';
 
@@ -193,7 +193,7 @@ export class EmbeddingService<
         return this.createEmbeddings(location, metadata);
     }
 
-    async ingest(fileRef: FileRef<BucketName>, metadata: Metadata | MetadataGeneratorFn<BucketName, Metadata>): Promise<EmbeddedFile<BucketName, Metadata>> {
+    async ingest(fileRef: FileRef<BucketName>, metadata: Metadata | MetadataGeneratorFn<BucketName, Metadata>): Promise<FileEmbedding<BucketName, Metadata>> {
         const location = await this.storage.getFileStorageLocation(fileRef);
         return this.updateEmbeddings(
             location,
@@ -210,7 +210,7 @@ export class EmbeddingService<
 
     async update(bucket: BucketName, metadata: Metadata | MetadataGeneratorFn<BucketName, Metadata>): Promise<
         PromiseSettledResult<
-            EmbeddedFile<BucketName, Metadata>
+            FileEmbedding<BucketName, Metadata>
         >[]
     > {
         const { data } = await this.database
