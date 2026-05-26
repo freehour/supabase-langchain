@@ -24,7 +24,7 @@ import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 import type { Database as LangChainDatabase } from './generated/database';
-import type { FileMetadata, MetadataGeneratorFn, StorageDocument } from './document';
+import type { EmbeddedFile, FileMetadata, MetadataGeneratorFn, StorageDocument } from './document';
 import { EmbeddingError, FileNotSupportedError } from './errors';
 import type { JsonObject } from './json';
 
@@ -193,22 +193,24 @@ export class EmbeddingService<
         return this.createEmbeddings(location, metadata);
     }
 
-    async ingest(fileRef: FileRef<BucketName>, metadata: Metadata | MetadataGeneratorFn<BucketName, Metadata>): Promise<StorageDocument<BucketName, Metadata>[]> {
+    async ingest(fileRef: FileRef<BucketName>, metadata: Metadata | MetadataGeneratorFn<BucketName, Metadata>): Promise<EmbeddedFile<BucketName, Metadata>> {
         const location = await this.storage.getFileStorageLocation(fileRef);
         return this.updateEmbeddings(
             location,
             typeof metadata === 'function' ? metadata(location) : metadata,
-        ).catch(error => {
-            throw new EmbeddingError('Failed to update embedding', {
-                cause: error,
-                location,
+        )
+            .then(documents => ({ location, documents }))
+            .catch(error => {
+                throw new EmbeddingError('Failed to update embedding', {
+                    cause: error,
+                    location,
+                });
             });
-        });
     }
 
     async update(bucket: BucketName, metadata: Metadata | MetadataGeneratorFn<BucketName, Metadata>): Promise<
         PromiseSettledResult<
-            StorageDocument<BucketName, Metadata>[]
+            EmbeddedFile<BucketName, Metadata>
         >[]
     > {
         const { data } = await this.database

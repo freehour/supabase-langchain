@@ -19,3 +19,11 @@ export type StorageDocument<
     BucketName extends string = string,
     Metadata extends JsonObject = JsonObject,
 > = DocumentInterface<StorageLocation<BucketName> & FileMetadata & Metadata>;
+
+export interface EmbeddedFile<
+    BucketName extends string = string,
+    Metadata extends JsonObject = JsonObject,
+> {
+    location: StorageLocation<BucketName>;
+    documents: StorageDocument<BucketName, Metadata>[];
+}
