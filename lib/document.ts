@@ -26,4 +26,5 @@ export interface FileEmbedding<
 > {
     location: StorageLocation<BucketName>;
     documents: StorageDocument<BucketName, Metadata>[];
+    metadata: FileMetadata & Metadata;
 }

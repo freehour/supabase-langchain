@@ -24,7 +24,7 @@ import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 import type { Database as LangChainDatabase } from './generated/database';
-import type { FileEmbedding, FileMetadata, MetadataGeneratorFn, StorageDocument } from './document';
+import type { FileEmbedding, FileMetadata, MetadataGeneratorFn } from './document';
 import { EmbeddingError, FileNotSupportedError } from './errors';
 import type { JsonObject } from './json';
 
@@ -146,8 +146,13 @@ export class EmbeddingService<
         return new RecursiveCharacterTextSplitter(this.splitterOptions);
     }
 
-    private async createEmbeddings(location: StorageLocation<BucketName>, metadata: Metadata): Promise<StorageDocument<BucketName, Metadata>[]> {
+    private async createEmbeddings(location: StorageLocation<BucketName>, metadata: Metadata): Promise<FileEmbedding<BucketName, Metadata>> {
         const { file } = await this.storage.downloadFile(location);
+        const fileMetadata: FileMetadata = {
+            name: file.name,
+            size: file.size,
+            type: file.type,
+        };
 
         const loader = this.getLoader(file);
         const splitter = this.getSplitter(file);
@@ -161,9 +166,7 @@ export class EmbeddingService<
                         id: doc.id,
                         metadata: {
                             ...doc.metadata,
-                            name: file.name,
-                            size: file.size,
-                            type: file.type,
+                            ...fileMetadata,
                             ...metadata,
                             ...location,
                         },
@@ -173,7 +176,14 @@ export class EmbeddingService<
 
         await this.vectorStore.addDocuments(documents);
 
-        return documents;
+        return {
+            location,
+            documents,
+            metadata: {
+                ...fileMetadata,
+                ...metadata,
+            },
+        };
     }
 
     private async deleteEmbeddings({ id }: StorageLocation<BucketName>): Promise<string[]> {
@@ -188,7 +198,7 @@ export class EmbeddingService<
         return ids;
     }
 
-    private async updateEmbeddings(location: StorageLocation<BucketName>, metadata: Metadata): Promise<StorageDocument<BucketName, Metadata>[]> {
+    private async updateEmbeddings(location: StorageLocation<BucketName>, metadata: Metadata): Promise<FileEmbedding<BucketName, Metadata>> {
         await this.deleteEmbeddings(location);
         return this.createEmbeddings(location, metadata);
     }
@@ -199,7 +209,6 @@ export class EmbeddingService<
             location,
             typeof metadata === 'function' ? metadata(location) : metadata,
         )
-            .then(documents => ({ location, documents }))
             .catch(error => {
                 throw new EmbeddingError('Failed to update embedding', {
                     cause: error,
