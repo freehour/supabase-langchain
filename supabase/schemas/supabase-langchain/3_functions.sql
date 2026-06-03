@@ -57,7 +57,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION langchain.get_outdated_embeddings(bucket text)
 RETURNS TABLE (
     file_id uuid,
-    bucket_id uuid,
+    bucket_id text,
     path_tokens text[]
 )
 SET search_path = ''
