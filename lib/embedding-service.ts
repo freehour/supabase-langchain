@@ -220,7 +220,7 @@ export class EmbeddingService<
             typeof metadata === 'function' ? metadata(location) : metadata,
         )
             .catch(error => {
-                throw new EmbeddingError('Failed to update embedding', {
+                throw new EmbeddingError(`Failed to update embedding: ${error.message}`, {
                     cause: error,
                     location,
                 });
