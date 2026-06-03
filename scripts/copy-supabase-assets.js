@@ -1,5 +1,5 @@
 // scripts/copy-supabase-assets.js
-// Copies migrations and schemas from @freehour/supabase-core to ./supabase in the consuming package
+// Copies migrations and schemas from @freehour/supabase-langchain to ./supabase in the consuming package
 
 import { fileURLToPath } from 'url';
 import { dirname, join, resolve } from 'path';
@@ -9,7 +9,7 @@ import { copyFileSync, mkdirSync, existsSync, readdirSync, statSync } from 'fs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Find the package root (assume script is in node_modules/@freehour/supabase-core/scripts)
+// Find the package root (assume script is in node_modules/@freehour/supabase-langchain/scripts)
 const packageRoot = resolve(__dirname, '..');
 const sourceDir = join(packageRoot, 'supabase');
 const destDir = resolve(packageRoot, '..', '..', '..', 'supabase');

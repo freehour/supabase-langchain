@@ -141,3 +141,6 @@ grant update on table "public"."embeddings" to "service_role";
 CREATE TRIGGER langchain_embeddings_apply_metadata BEFORE INSERT OR UPDATE ON public.embeddings FOR EACH ROW EXECUTE FUNCTION langchain.embeddings_apply_metadata();
 
 
+grant usage on schema langchain to "anon";
+grant usage on schema langchain to "authenticated";
+grant usage on schema langchain to "service_role";
