@@ -3,7 +3,7 @@
   "private": false,
   "displayName": "Supabase-Langchain",
   "description": "Integration package for using LangChain with Supabase",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "type": "module",
   "repository": {
     "type": "git",
@@ -27,34 +27,34 @@
     }
   },
   "dependencies": {
-    "@freehour/mime": "^1.1.14",
+    "@freehour/mime": "^1.2.0",
     "@langchain/classic": "^1.0.34",
-    "@langchain/community": "^1.1.28",
+    "@langchain/community": "^1.1.29",
     "@langchain/core": "^1.1.48",
     "@langchain/textsplitters": "^1.0.1",
-    "langchain": "^1.4.2",
+    "langchain": "^1.4.4",
     "officeparser": "^6.1.1",
     "pdf-parse": "^2.4.5",
     "srt-parser-2": "^1.2.3"
   },
   "peerDependencies": {
-    "@freehour/supabase-core": "^2.5.2",
-    "@supabase/supabase-js": "^2.106.2"
+    "@freehour/supabase-core": "^2.5.3",
+    "@supabase/supabase-js": "^2.107.0"
   },
   "overrides": {
     "@browserbasehq/stagehand": "3.2.1"
   },
   "devDependencies": {
-    "@freehour/supabase-core": "^2.5.2",
     "@freehour/eslint-rules": "^1.0.19",
-    "@supabase/supabase-js": "^2.106.2",
+    "@freehour/supabase-core": "^2.5.3",
+    "@supabase/supabase-js": "^2.107.0",
     "ajv": "^8.20.0",
     "bun-types": "^1.3.14",
     "eslint": "9.39.4",
-    "supabase": "^2.101.0",
+    "supabase": "^2.104.0",
     "typescript": "^6.0.3",
-    "vite": "^8.0.14",
-    "vite-plugin-dts": "^5.0.1"
+    "vite": "^8.0.16",
+    "vite-plugin-dts": "^5.0.2"
   },
   "trustedDependencies": [
     "@freehour/supabase-core",

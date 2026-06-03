@@ -79,10 +79,13 @@ export class EmbeddingService<
     }
 
     private getLoader(file: File): DocumentLoader {
-        const mime = Mime.parse(file.type);
+        const mime = Mime.parse(file.type).stripParameters();
 
         if (mime.equals('text/csv')) {
             return new CSVLoader(file);
+        }
+        if (mime.equals('application/vnd.openxmlformats-officedocument.presentationml.presentation')) {
+            return new PPTXLoader(file);
         }
         if (mime.equals('application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
             return new DocxLoader(file, { type: 'docx' });
@@ -103,13 +106,18 @@ export class EmbeddingService<
         if (mime.equals('application/pdf')) {
             return new PDFLoader(file);
         }
-        if (mime.equals('application/vnd.openxmlformats-officedocument.presentationml.presentation')) {
-            return new PPTXLoader(file);
-        }
         if (mime.equals('application/x-subrip')) {
             return new SRTLoader(file);
         }
-        if (mime.type === 'text') {
+
+        const textLoaderTypes = [
+            new Mime({ type: 'application', subtype: 'javascript' }),
+            new Mime({ type: 'application', subtype: 'x-httpd-php' }),
+            new Mime({ type: 'application', subtype: 'x-protobuf' }),
+            new Mime({ type: 'application', subtype: 'x-latex' }),
+        ];
+
+        if (mime.type === 'text' || Mime.includes(textLoaderTypes, [mime])) {
             return new TextLoader(file);
         }
 
@@ -119,6 +127,8 @@ export class EmbeddingService<
 
     private getSplitter(file: File): RecursiveCharacterTextSplitter {
         const mimeToLanguageMap: Partial<Record<MimeString, SupportedTextSplitterLanguage>> = {
+            'text/x-c': 'cpp',
+            'text/x-chdr': 'cpp',
             'text/x-c++src': 'cpp',
             'text/x-go': 'go',
             'text/x-java-source': 'java',
