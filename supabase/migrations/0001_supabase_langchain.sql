@@ -33,8 +33,8 @@ CREATE OR REPLACE FUNCTION langchain.embeddings_apply_metadata()
  SET search_path TO ''
 AS $function$
 BEGIN
-    IF NEW.metadata ? 'fileId' THEN
-        NEW.file_id := NEW.metadata ->> 'fileId';
+    IF NEW.metadata ? 'id' THEN
+        NEW.file_id := NEW.metadata ->> 'id';
     END IF;
     RETURN NEW;
 END;

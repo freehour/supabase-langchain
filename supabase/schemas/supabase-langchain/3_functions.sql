@@ -37,7 +37,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
--- Function extracts the 'fileId' from metadata and assigns it to reference file_id.
+-- Function extracts the 'id' from metadata and assigns it to reference file_id.
 -- LangChain inserts embeddings automatically with a user defined metadata;
 -- this function is triggered before insert to populate the file_id column from the metadata.
 CREATE OR REPLACE FUNCTION langchain.embeddings_apply_metadata()
@@ -45,8 +45,8 @@ RETURNS trigger
 SET search_path = ''
 AS $$
 BEGIN
-    IF NEW.metadata ? 'fileId' THEN
-        NEW.file_id := NEW.metadata ->> 'fileId';
+    IF NEW.metadata ? 'id' THEN
+        NEW.file_id := NEW.metadata ->> 'id';
     END IF;
     RETURN NEW;
 END;
