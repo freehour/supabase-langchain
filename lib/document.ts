@@ -1,5 +1,6 @@
 import type { StorageLocation } from '@freehour/supabase-core';
 import type { DocumentInterface } from '@langchain/core/documents';
+import type { BaseRetrieverInterface } from '@langchain/core/retrievers';
 
 import type { JsonObject } from './json';
 
@@ -15,10 +16,20 @@ export type MetadataGeneratorFn<
     Metadata extends JsonObject = JsonObject,
 > = (location: StorageLocation<BucketName>) => Metadata;
 
+export type StorageDocumentMetadata<
+    BucketName extends string = string,
+    Metadata extends JsonObject = JsonObject,
+> = StorageLocation<BucketName> & FileMetadata & Metadata;
+
 export type StorageDocument<
     BucketName extends string = string,
     Metadata extends JsonObject = JsonObject,
-> = DocumentInterface<StorageLocation<BucketName> & FileMetadata & Metadata>;
+> = DocumentInterface<StorageDocumentMetadata<BucketName, Metadata>>;
+
+export type StorageDocumentRetriever<
+    BucketName extends string = string,
+    Metadata extends JsonObject = JsonObject,
+> = BaseRetrieverInterface<StorageDocumentMetadata<BucketName, Metadata>>;
 
 export interface FileEmbedding<
     BucketName extends string = string,

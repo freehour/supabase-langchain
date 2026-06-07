@@ -17,14 +17,13 @@ import type { SupabaseFilterRPCCall } from '@langchain/community/vectorstores/su
 import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase';
 import type { DocumentLoader } from '@langchain/core/document_loaders/base';
 import type { EmbeddingsInterface } from '@langchain/core/embeddings';
-import type { BaseRetrieverInterface } from '@langchain/core/retrievers';
 import type { VectorStoreRetrieverInput } from '@langchain/core/vectorstores';
 import type { SupportedTextSplitterLanguage, TextSplitterParams } from '@langchain/textsplitters';
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 import type { Database as LangChainDatabase } from './generated/database';
-import type { FileEmbedding, FileMetadata, MetadataGeneratorFn } from './document';
+import type { FileEmbedding, FileMetadata, MetadataGeneratorFn, StorageDocumentRetriever } from './document';
 import { EmbeddingError, FileNotSupportedError } from './errors';
 import type { JsonObject } from './json';
 
@@ -250,7 +249,7 @@ export class EmbeddingService<
         );
     }
 
-    retriever(options: RetriverOptions<BucketName, Metadata>): BaseRetrieverInterface {
-        return this.vectorStore.asRetriever(options);
+    retriever(options: RetriverOptions<BucketName, Metadata>): StorageDocumentRetriever<BucketName, Metadata> {
+        return this.vectorStore.asRetriever(options) as unknown as StorageDocumentRetriever<BucketName, Metadata>;
     }
 }
