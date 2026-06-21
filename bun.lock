@@ -6,23 +6,23 @@
       "name": "@freehour/supabase-langchain",
       "dependencies": {
         "@freehour/mime": "^1.2.0",
-        "@langchain/classic": "^1.0.34",
+        "@langchain/classic": "^1.0.36",
         "@langchain/community": "^1.1.29",
-        "@langchain/core": "^1.1.48",
+        "@langchain/core": "^1.2.0",
         "@langchain/textsplitters": "^1.0.1",
-        "langchain": "^1.4.4",
+        "langchain": "^1.5.0",
         "officeparser": "^6.1.1",
         "pdf-parse": "^2.4.5",
         "srt-parser-2": "^1.2.3",
       },
       "devDependencies": {
         "@freehour/eslint-rules": "^1.0.19",
-        "@freehour/supabase-core": "^2.5.6",
-        "@supabase/supabase-js": "^2.107.0",
+        "@freehour/supabase-core": "^2.5.7",
+        "@supabase/supabase-js": "^2.108.2",
         "ajv": "^8.20.0",
         "bun-types": "^1.3.14",
         "eslint": "9.39.4",
-        "supabase": "^2.104.0",
+        "supabase": "^2.107.0",
         "typescript": "^6.0.3",
         "vite": "^8.0.16",
         "vite-plugin-dts": "^5.0.2",
@@ -157,7 +157,7 @@
 
     "@freehour/mime": ["@freehour/mime@1.2.0", "", { "dependencies": { "@freehour/assert": "^1.0.1", "jszip": "^3.10.1" } }, "sha512-ZgbtimCuTTJ0o6RPQxGR5oXZQL9LH4ySPR2TK5bRoYhHScjGQWBR/n4IbrIQmBa+fUl7dp9XMJxkiAQ7jkR9qA=="],
 
-    "@freehour/supabase-core": ["@freehour/supabase-core@2.5.7", "", { "dependencies": { "@freehour/assert": "^1.0.1", "zod": "^4.4.3" }, "peerDependencies": { "@supabase/postgrest-js": "^2.108.2", "@supabase/storage-js": "^2.108.2", "@supabase/supabase-js": "^2.108.2" } }, "sha512-0mfax4DNXCrpK3smzSGlxLI2iotbJ/YNuCDBgIsp7xy+52rkDbRdlYfxNMGOebt0K9zSa8LSGb3PhH+FfJzoYg=="],
+    "@freehour/supabase-core": ["@freehour/supabase-core@2.5.8", "", { "dependencies": { "@freehour/assert": "^1.0.1", "zod": "^4.4.3" }, "peerDependencies": { "@supabase/postgrest-js": "^2.108.2", "@supabase/storage-js": "^2.108.2", "@supabase/supabase-js": "^2.108.2" } }, "sha512-e6Q+B11G+JYvEKGCzT6UDK2ntJZ3jH8+iKJqm0HNgaCW+Vuxa8nQeI0r3NnfyvytaKKBqFMFo3HU1WL64JhmEg=="],
 
     "@google/genai": ["@google/genai@1.50.1", "", { "dependencies": { "google-auth-library": "^10.3.0", "p-retry": "^4.6.2", "protobufjs": "^7.5.4", "ws": "^8.18.0" }, "peerDependencies": { "@modelcontextprotocol/sdk": "^1.25.2" }, "optionalPeers": ["@modelcontextprotocol/sdk"] }, "sha512-YbkX7H9+1Pt8wOt7DDREy8XSoiL6fRDzZQRyaVBarFf8MR3zHGqVdvM4cLbDXqPhxqvegZShgfxb8kw9C7YhAQ=="],
 
