@@ -28,6 +28,7 @@ export class FileNotSupportedError extends TracedError {
         }: FileNotSupportedErrorOptions,
     ) {
         super(message, options);
+        this.name = 'FileNotSupportedError';
         this.file = file;
     }
 }
@@ -58,6 +59,7 @@ export class EmbeddingError extends TracedError {
         }: EmbeddingErrorOptions,
     ) {
         super(message, options);
+        this.name = 'EmbeddingError';
         this.location = location;
     }
 }
